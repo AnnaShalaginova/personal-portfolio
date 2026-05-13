@@ -1,0 +1,46 @@
+.header {
+  height: 80px;
+  background-color: var(--bg-color);
+  border-bottom: 2px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.logo a {
+  font-weight: 900;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  color: var(--text-color);
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+}
+
+.nav-links a {
+  font-weight: 700;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  color: var(--text-color);
+  font-size: 0.9rem;
+  padding: 4px 8px;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+}
+
+.nav-links a:hover {
+  background: var(--text-color);
+  color: #fff;
+}

@@ -1,0 +1,44 @@
+<section id="contact" class="contact">
+  <h2 class="section-title">Contact</h2>
+  <div class="contact-window window-card">
+    <div class="window-header">
+      <div class="dot dot-red"></div>
+      <div class="dot dot-yellow"></div>
+      <div class="dot dot-green"></div>
+      <span class="window-title">new-message.msg</span>
+    </div>
+    <div class="contact-content">
+      <div class="contact-info">
+        <h3>Let's Collaborate</h3>
+        <p>I'm always looking for new challenges and creative opportunities.</p>
+        <div class="contact-details">
+          <p><span class="label">MAIL:</span> anna@example.com</p>
+          <p><span class="label">LOCATION:</span> San Francisco, CA</p>
+        </div>
+      </div>
+      
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
+        <div class="form-group">
+          <label>NAME</label>
+          <input type="text" formControlName="name" placeholder="Who are you?">
+        </div>
+        
+        <div class="form-group">
+          <label>EMAIL</label>
+          <input type="email" formControlName="email" placeholder="Where can I reach you?">
+        </div>
+        
+        <div class="form-group">
+          <label>MESSAGE</label>
+          <textarea formControlName="message" rows="4" placeholder="What's on your mind?"></textarea>
+        </div>
+        
+        <button type="submit" class="btn btn-red" [disabled]="contactForm.invalid">Send Message</button>
+      </form>
+      
+      <div *ngIf="successMessage" class="success-message">
+        {{ successMessage }}
+      </div>
+    </div>
+  </div>
+</section>
