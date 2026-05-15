@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { supabase } from '../../../environments/environment';
 
 @Component({
   selector: 'app-contact',
@@ -10,8 +11,9 @@ import { CommonModule } from '@angular/common';
 })
 export class Contact {
   contactForm: FormGroup;
-  submitted = false;
-  successMessage = '';
+  isSubmitting = signal(false);
+  successMessage = signal('');
+  errorMessage = signal('');
 
   constructor(private fb: FormBuilder) {
     this.contactForm = this.fb.group({
@@ -21,18 +23,30 @@ export class Contact {
     });
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (this.contactForm.valid) {
-      this.submitted = true;
-      console.log('Form Submitted!', this.contactForm.value);
-      this.successMessage = 'Thank you for your message! I will get back to you soon.';
-      this.contactForm.reset();
+      this.isSubmitting.set(true);
+      this.errorMessage.set('');
       
-      // Reset success message after 5 seconds
-      setTimeout(() => {
-        this.successMessage = '';
-        this.submitted = false;
-      }, 5000);
+      try {
+        const { error } = await supabase
+          .from('contact_messages')
+          .insert([this.contactForm.value]);
+
+        if (error) throw error;
+
+        this.successMessage.set('Thank you! Your message has been saved to the database.');
+        this.contactForm.reset();
+        
+        setTimeout(() => {
+          this.successMessage.set('');
+        }, 5000);
+      } catch (err: any) {
+        console.error('Error saving message:', err);
+        this.errorMessage.set('Oops! Something went wrong. Please try again.');
+      } finally {
+        this.isSubmitting.set(false);
+      }
     }
   }
 }

@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { supabase } from '../../../environments/environment';
 
 interface Project {
+  id?: string;
   title: string;
   description: string;
   tags: string[];
@@ -14,25 +16,30 @@ interface Project {
   templateUrl: './projects.html',
   styleUrl: './projects.css'
 })
-export class Projects {
-  projects: Project[] = [
-    {
-      title: 'E-commerce Platform',
-      description: 'A full-stack e-commerce solution with Angular and Node.js.',
-      tags: ['Angular', 'Node.js', 'MongoDB'],
-      link: '#'
-    },
-    {
-      title: 'Data Visualization Dashboard',
-      description: 'Interactive dashboard for real-time data analysis using D3.js.',
-      tags: ['D3.js', 'TypeScript', 'API Integration'],
-      link: '#'
-    },
-    {
-      title: 'Portfolio Website',
-      description: 'A clean and responsive personal portfolio built with Angular.',
-      tags: ['Angular', 'Vanilla CSS'],
-      link: '#'
+export class Projects implements OnInit {
+  projects = signal<Project[]>([]);
+  loading = signal<boolean>(true);
+  error = signal<string | null>(null);
+
+  async ngOnInit() {
+    await this.fetchProjects();
+  }
+
+  async fetchProjects() {
+    try {
+      this.loading.set(true);
+      const { data, error } = await supabase
+        .from('projects')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      this.projects.set(data || []);
+    } catch (err: any) {
+      console.error('Error fetching projects:', err);
+      this.error.set(err.message);
+    } finally {
+      this.loading.set(false);
     }
-  ];
+  }
 }

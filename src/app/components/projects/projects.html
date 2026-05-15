@@ -1,7 +1,11 @@
 <section id="projects" class="projects">
   <h2 class="section-title">Projects</h2>
-  <div class="projects-grid">
-    <div *ngFor="let project of projects" class="project-card window-card">
+  
+  <div *ngIf="loading()" class="loading">Loading projects...</div>
+  <div *ngIf="error()" class="error-box">Error: {{ error() }}</div>
+
+  <div class="projects-grid" *ngIf="!loading() && !error()">
+    <div *ngFor="let project of projects()" class="project-card window-card">
       <div class="window-header">
         <div class="dot dot-red"></div>
         <div class="dot dot-yellow"></div>

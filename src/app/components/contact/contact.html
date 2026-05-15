@@ -33,11 +33,17 @@
           <textarea formControlName="message" rows="4" placeholder="What's on your mind?"></textarea>
         </div>
         
-        <button type="submit" class="btn btn-red" [disabled]="contactForm.invalid">Send Message</button>
+        <button type="submit" class="btn btn-red" [disabled]="contactForm.invalid || isSubmitting()">
+          {{ isSubmitting() ? 'SENDING...' : 'Send Message' }}
+        </button>
       </form>
       
-      <div *ngIf="successMessage" class="success-message">
-        {{ successMessage }}
+      <div *ngIf="successMessage()" class="success-message">
+        {{ successMessage() }}
+      </div>
+
+      <div *ngIf="errorMessage()" class="error-message">
+        {{ errorMessage() }}
       </div>
     </div>
   </div>
