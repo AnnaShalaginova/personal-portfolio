@@ -29,13 +29,23 @@ export class Contact {
       this.errorMessage.set('');
       
       try {
-        const { error } = await supabase
+        // 1. Save to Supabase (Database Log)
+        const { error: dbError } = await supabase
           .from('contact_messages')
           .insert([this.contactForm.value]);
 
-        if (error) throw error;
+        if (dbError) throw dbError;
 
-        this.successMessage.set('Thank you! Your message has been saved to the database.');
+        // 2. Send Email via Vercel Function
+        const emailResponse = await fetch('/api/send-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(this.contactForm.value),
+        });
+
+        if (!emailResponse.ok) throw new Error('Failed to send email');
+
+        this.successMessage.set('Thank you! Your message has been sent and saved.');
         this.contactForm.reset();
         
         setTimeout(() => {
