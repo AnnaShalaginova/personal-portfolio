@@ -1,5 +1,6 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { supabase } from '../../../environments/environment';
 
 interface Project {
   title: string;
@@ -35,10 +36,31 @@ export class Projects implements OnInit {
       link: '#'
     }
   ]);
-  loading = signal<boolean>(false);
+  loading = signal<boolean>(true);
   error = signal<string | null>(null);
 
-  ngOnInit() {
-    // Local data ensures reliability while database is being configured
+  async ngOnInit() {
+    await this.fetchProjects();
+  }
+
+  async fetchProjects() {
+    try {
+      this.loading.set(true);
+      const { data, error } = await supabase
+        .from('projects')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      
+      if (data && data.length > 0) {
+        this.projects.set(data);
+      }
+    } catch (err: any) {
+      console.error('Error fetching projects, falling back to local data:', err);
+      // We don't set the error signal here so the UI still shows local projects
+    } finally {
+      this.loading.set(false);
+    }
   }
 }
