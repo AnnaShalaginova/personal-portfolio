@@ -56,7 +56,15 @@ export class Projects implements OnInit {
       if (error) throw error;
       
       if (data && data.length > 0) {
-        this.projects.set(data);
+        // Merge database data with local defaults (like images)
+        const mergedProjects = data.map(dbProject => {
+          const localMatch = this.projects().find(p => p.title === dbProject.title);
+          return {
+            ...dbProject,
+            image_url: dbProject.image_url || localMatch?.image_url
+          };
+        });
+        this.projects.set(mergedProjects);
       }
     } catch (err: any) {
       console.error('Error fetching projects, falling back to local data:', err);
