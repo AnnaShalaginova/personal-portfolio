@@ -23,7 +23,7 @@ export class Projects implements OnInit {
       description: 'A cloud-synced digital songbook for ukulele players featuring real-time chord visualization, bracket notation parsing, and a transposer utility.',
       tags: ['React', 'Supabase', 'PostgreSQL', 'Vite', 'Resend'],
       link: 'https://ukulele-app.vercel.app/',
-      image_url: 'https://images.unsplash.com/photo-1595066050601-20967397e169?q=80&w=800&auto=format&fit=crop'
+      image_url: '/ukulele-app.png'
     },
     {
       title: 'E-commerce Platform',
