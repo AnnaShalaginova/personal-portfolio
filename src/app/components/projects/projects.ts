@@ -55,15 +55,32 @@ export class Projects implements OnInit {
 
       if (error) throw error;
       
+      console.log('Supabase Projects Data:', data);
+      
       if (data && data.length > 0) {
-        // Merge database data with local defaults (like images)
+        const localProjects = [
+          {
+            title: 'Ukulele Songbook App',
+            image_url: '/ukulele-app.png'
+          },
+          {
+            title: 'E-commerce Platform',
+            image_url: '' // Add others if needed
+          }
+        ];
+
         const mergedProjects = data.map(dbProject => {
-          const localMatch = this.projects().find(p => p.title === dbProject.title);
+          const localMatch = localProjects.find(p => 
+            p.title.toLowerCase().trim() === dbProject.title.toLowerCase().trim()
+          );
+          
           return {
             ...dbProject,
-            image_url: dbProject.image_url || localMatch?.image_url
+            image_url: dbProject.image_url || localMatch?.image_url || null
           };
         });
+        
+        console.log('Merged Projects:', mergedProjects);
         this.projects.set(mergedProjects);
       }
     } catch (err: any) {
