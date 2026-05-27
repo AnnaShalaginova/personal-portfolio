@@ -17,6 +17,7 @@ interface Project {
   styleUrl: './projects.css'
 })
 export class Projects implements OnInit {
+  // Robust initial data
   projects = signal<Project[]>([
     {
       title: 'Ukulele Songbook App',
@@ -38,6 +39,7 @@ export class Projects implements OnInit {
       link: '#'
     }
   ]);
+  
   loading = signal<boolean>(true);
   error = signal<string | null>(null);
 
@@ -55,37 +57,31 @@ export class Projects implements OnInit {
 
       if (error) throw error;
       
-      console.log('Supabase Projects Data:', data);
-      
       if (data && data.length > 0) {
-        const localProjects = [
-          {
-            title: 'Ukulele Songbook App',
-            image_url: '/ukulele-app.png'
-          },
-          {
-            title: 'E-commerce Platform',
-            image_url: '' // Add others if needed
-          }
-        ];
-
-        const mergedProjects = data.map(dbProject => {
-          const localMatch = localProjects.find(p => 
-            p.title.toLowerCase().trim() === dbProject.title.toLowerCase().trim()
-          );
-          
-          return {
-            ...dbProject,
-            image_url: dbProject.image_url || localMatch?.image_url || null
-          };
-        });
+        // Filter out rows that don't at least have a title
+        const validDbProjects = data.filter(p => p.title && p.title.trim() !== '');
         
-        console.log('Merged Projects:', mergedProjects);
-        this.projects.set(mergedProjects);
+        if (validDbProjects.length > 0) {
+          const mergedProjects = validDbProjects.map(dbProject => {
+            // Find a local match to preserve things like images if DB is missing them
+            const localMatch = this.projects().find(p => 
+              p.title.toLowerCase().trim() === dbProject.title.toLowerCase().trim()
+            );
+            
+            return {
+              title: dbProject.title || 'Untitled Project',
+              description: dbProject.description || localMatch?.description || 'No description provided.',
+              tags: dbProject.tags || localMatch?.tags || [],
+              link: dbProject.link || localMatch?.link || '#',
+              image_url: dbProject.image_url || localMatch?.image_url || null
+            };
+          });
+          
+          this.projects.set(mergedProjects);
+        }
       }
     } catch (err: any) {
-      console.error('Error fetching projects, falling back to local data:', err);
-      // We don't set the error signal here so the UI still shows local projects
+      console.error('Supabase fetch error, using local fallback:', err);
     } finally {
       this.loading.set(false);
     }
