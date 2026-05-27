@@ -4,25 +4,30 @@
   <div *ngIf="loading()" class="loading">Loading projects...</div>
   <div *ngIf="error()" class="error-box">Error: {{ error() }}</div>
 
-  <div class="projects-grid" *ngIf="!loading() && !error()">
+  <!-- Debug info (hidden in production normally, but visible for now) -->
+  <div *ngIf="!loading() && projects().length === 0" class="error-box">
+    No valid projects found in database or local storage.
+  </div>
+
+  <div class="projects-grid" *ngIf="!loading()">
     <div *ngFor="let project of projects()" class="project-card window-card">
       <div class="window-header">
         <div class="dot dot-red"></div>
         <div class="dot dot-yellow"></div>
         <div class="dot dot-green"></div>
-        <span class="window-title">{{ project.tags[0] }}</span>
+        <span class="window-title">{{ project.tags && project.tags.length > 0 ? project.tags[0] : 'Project' }}</span>
       </div>
       <div class="project-image-container">
         <img *ngIf="project.image_url" [src]="project.image_url" [alt]="project.title" class="project-image">
         <div *ngIf="!project.image_url" class="project-image-placeholder"></div>
       </div>
       <div class="project-info">
-        <h3>{{ project.title }}</h3>
-        <p>{{ project.description }}</p>
-        <div class="project-tags">
+        <h3>{{ project.title || 'Untitled' }}</h3>
+        <p>{{ project.description || 'No description available.' }}</p>
+        <div class="project-tags" *ngIf="project.tags">
           <span *ngFor="let tag of project.tags" class="tag">#{{ tag }}</span>
         </div>
-        <a [href]="project.link" class="project-link-btn">View Project</a>
+        <a [href]="project.link || '#'" class="project-link-btn" target="_blank">View Project</a>
       </div>
     </div>
   </div>
