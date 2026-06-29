@@ -27,6 +27,13 @@ export class Projects implements OnInit {
       image_url: '/ukulele-app.png'
     },
     {
+      title: 'Box Office Intelligence',
+      description: 'An interactive Streamlit dashboard for exploring movie revenue trends, genre performance, ratings, language segments, and exportable box office data from 2000 through 2024.',
+      tags: ['Streamlit', 'Python', 'Plotly', 'SQLite', 'Data Visualization'],
+      link: 'https://box-office-intelligence-7uqxlaztmmcuuug7xdsuqd.streamlit.app',
+      image_url: '/box-office-intelligence.png'
+    },
+    {
       title: 'E-commerce Platform',
       description: 'A full-stack e-commerce solution with Angular and Node.js.',
       tags: ['Angular', 'Node.js', 'MongoDB'],
@@ -62,9 +69,10 @@ export class Projects implements OnInit {
         const validDbProjects = data.filter(p => p.title && p.title.trim() !== '');
         
         if (validDbProjects.length > 0) {
+          const localProjects = this.projects();
           const mergedProjects = validDbProjects.map(dbProject => {
             // Find a local match to preserve things like images if DB is missing them
-            const localMatch = this.projects().find(p => 
+            const localMatch = localProjects.find(p => 
               p.title.toLowerCase().trim() === dbProject.title.toLowerCase().trim()
             );
             
@@ -77,7 +85,14 @@ export class Projects implements OnInit {
             };
           });
           
-          this.projects.set(mergedProjects);
+          const dbProjectTitles = new Set(
+            validDbProjects.map(p => p.title.toLowerCase().trim())
+          );
+          const localOnlyProjects = localProjects.filter(
+            p => !dbProjectTitles.has(p.title.toLowerCase().trim())
+          );
+          
+          this.projects.set([...mergedProjects, ...localOnlyProjects]);
         }
       }
     } catch (err: any) {
