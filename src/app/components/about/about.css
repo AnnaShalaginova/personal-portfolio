@@ -1,43 +1,57 @@
 .about-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 80px;
   align-items: start;
 }
 
 .about-text h3 {
-  font-size: 1.8rem;
-  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #090d16;
 }
 
 .about-text p {
-  margin-bottom: 1rem;
-  color: var(--light-text);
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
+  color: #1f2937;
+  font-size: 1.1rem;
 }
 
 .about-skills h3 {
-  font-size: 1.8rem;
-  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #090d16;
 }
 
 .skills-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 15px;
 }
 
 .skill-tag {
-  background-color: #f1f5f9;
-  color: var(--primary-color);
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-weight: 600;
-  font-size: 0.9rem;
+  background-color: #fff;
+  color: var(--text-color);
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.skill-tag:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+  transform: translateY(-2px);
 }
 
 @media (max-width: 768px) {
   .about-grid {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 60px;
   }
 }
+

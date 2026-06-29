@@ -27,7 +27,24 @@
         <div class="project-tags" *ngIf="project.tags">
           <span *ngFor="let tag of project.tags" class="tag">#{{ tag }}</span>
         </div>
-        <a [href]="project.link || '#'" class="project-link-btn" target="_blank">View Project</a>
+        <div class="project-actions">
+          <a *ngIf="project.link && project.link !== '#' && project.link !== '/'" [href]="project.link" class="project-link-btn" target="_blank">View Project</a>
+          <button *ngIf="project.gallery_urls && project.gallery_urls.length > 0" 
+                  (click)="openGallery(project.gallery_urls)" 
+                  class="project-link-btn gallery-btn">
+            View Gallery
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gallery Modal -->
+  <div class="gallery-modal" *ngIf="selectedGallery()" (click)="closeGallery()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <button class="close-btn" (click)="closeGallery()">&times;</button>
+      <div class="gallery-grid">
+        <img *ngFor="let url of selectedGallery()" [src]="url" alt="Gallery image" class="gallery-item">
       </div>
     </div>
   </div>

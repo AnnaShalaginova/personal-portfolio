@@ -1,22 +1,23 @@
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 40px;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 50px;
 }
 
 .project-card {
   margin-bottom: 0;
-  transition: transform 0.2s;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
 }
 
 .project-card:hover {
-  transform: translate(-4px, -4px);
-  box-shadow: 8px 8px 0px #000;
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
 }
 
 .project-image-container {
-  height: 240px;
-  border-bottom: 2px solid var(--border-color);
+  height: 260px;
+  border-bottom: 1px solid var(--border-color);
   overflow: hidden;
   position: relative;
 }
@@ -24,68 +25,157 @@
 .project-image {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   display: block;
-  background-color: #f8fafc;
+  transition: transform 0.5s ease;
+}
+
+.project-card:hover .project-image {
+  transform: scale(1.05);
 }
 
 .project-image-placeholder {
   height: 100%;
-  background-image: linear-gradient(45deg, #ddd 25%, transparent 25%), 
-                    linear-gradient(-45deg, #ddd 25%, transparent 25%), 
-                    linear-gradient(45deg, transparent 75%, #ddd 75%), 
-                    linear-gradient(-45deg, transparent 75%, #ddd 75%);
-  background-size: 20px 20px;
-  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
 
 .project-info {
-  padding: 2rem;
+  padding: 2.5rem;
 }
 
 .project-info h3 {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   margin-bottom: 1rem;
+  color: #090d16;
 }
 
 .project-info p {
-  color: var(--text-color);
-  font-size: 1rem;
-  margin-bottom: 1.5rem;
-  font-weight: 500;
+  color: #374151;
+  font-size: 1.05rem;
+  margin-bottom: 2rem;
+  font-weight: 400;
+  line-height: 1.7;
 }
 
 .project-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 2rem;
+  gap: 12px;
+  margin-bottom: 2.5rem;
 }
 
 .tag {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  background: transparent;
-  color: var(--text-color);
-  font-weight: 700;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  background: rgba(162, 155, 254, 0.1);
+  color: var(--accent-color);
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 20px;
   text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .project-link-btn {
-  display: block;
-  width: 100%;
+  display: inline-block;
+  flex: 1;
   text-align: center;
-  padding: 12px;
-  border: 2px solid var(--border-color);
-  background: var(--text-color);
+  padding: 14px 24px;
+  background: var(--accent-color);
   color: #fff;
-  font-weight: 800;
-  text-transform: uppercase;
-  font-family: var(--font-mono);
-  transition: all 0.1s;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
 }
 
 .project-link-btn:hover {
-  background: #fff;
-  color: var(--text-color);
+  background: #948cf5;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(162, 155, 254, 0.3);
 }
+
+.project-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.gallery-btn {
+  background: transparent !important;
+  color: var(--accent-color) !important;
+  border: 1px solid var(--accent-color) !important;
+  cursor: pointer;
+}
+
+.gallery-btn:hover {
+  background: rgba(162, 155, 254, 0.05) !important;
+  color: var(--accent-color) !important;
+}
+
+/* Gallery Modal Styles */
+.gallery-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 2rem;
+}
+
+.modal-content {
+  position: relative;
+  background: #fff;
+  padding: 3rem;
+  border-radius: 30px;
+  max-width: 1000px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border: none;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+}
+
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+  color: #333;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.gallery-item {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  border-radius: 15px;
+  transition: all 0.4s ease;
+}
+
+.gallery-item:hover {
+  transform: scale(1.03);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+

@@ -2,70 +2,90 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: calc(100vh - 80px);
-  padding: 40px 20px;
+  min-height: calc(100vh - 90px);
+  padding: 80px 20px;
 }
 
 .hero-window {
   width: 100%;
-  max-width: 900px;
+  max-width: 1000px;
+  text-align: center;
 }
 
 .window-title {
-  margin-left: auto;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  opacity: 0.7;
+  display: none; /* Remove industrial terminal feel */
+}
+
+.window-header {
+  justify-content: center; /* Center dots or remove if too industrial */
+  background: transparent;
+  border-bottom: none;
+  padding: 40px 0 0 0;
 }
 
 .window-content {
-  padding: 60px;
-}
-
-.hero-content h1 {
-  font-size: 5rem;
-  line-height: 0.9;
-  margin-bottom: 1.5rem;
+  padding: 60px 80px 80px;
 }
 
 .window-content h1 {
-  font-size: 5rem;
-  line-height: 0.9;
-  margin-bottom: 1.5rem;
+  font-size: 5.5rem;
+  line-height: 1.1;
+  margin-bottom: 2rem;
+  letter-spacing: -0.03em;
 }
 
 .subtitle {
-  font-family: var(--font-mono);
-  font-weight: 700;
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 1rem;
+  margin-bottom: 2.5rem;
   color: var(--accent-color);
 }
 
 .hero-description {
-  font-size: 1.25rem;
-  margin-bottom: 3rem;
-  font-weight: 500;
+  font-size: 1.4rem;
+  line-height: 1.8;
+  margin-bottom: 4rem;
+  color: #111827;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .hero-actions {
   display: flex;
-  gap: 1.5rem;
+  gap: 2rem;
+  justify-content: center;
 }
 
-.btn-red {
-  background: var(--accent-color);
-  color: #fff;
+.btn-secondary {
+  background: transparent;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  box-shadow: none;
+}
+
+.btn-secondary:hover {
+  background: rgba(162, 155, 254, 0.05);
+  border-color: var(--accent-color);
+  box-shadow: none;
 }
 
 @media (max-width: 768px) {
   .window-content {
-    padding: 30px;
+    padding: 40px 20px;
   }
   .window-content h1 {
-    font-size: 3rem;
+    font-size: 3.5rem;
+  }
+  .hero-description {
+    font-size: 1.1rem;
   }
   .hero-actions {
     flex-direction: column;
+    align-items: stretch;
   }
 }
+

@@ -1,10 +1,13 @@
 .header {
-  height: 80px;
-  background-color: var(--bg-color);
-  border-bottom: 2px solid var(--border-color);
+  height: 90px;
+  background-color: rgba(250, 249, 246, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   position: sticky;
   top: 0;
   z-index: 1000;
+  transition: all 0.3s ease;
 }
 
 .nav {
@@ -14,33 +17,47 @@
   height: 100%;
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 40px;
 }
 
 .logo a {
-  font-weight: 900;
-  font-size: 1.5rem;
-  text-transform: uppercase;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 1.6rem;
   color: var(--text-color);
+  letter-spacing: -0.02em;
 }
 
 .nav-links {
   display: flex;
-  gap: 2.5rem;
+  gap: 3rem;
 }
 
 .nav-links a {
-  font-weight: 700;
-  font-family: var(--font-mono);
-  text-transform: uppercase;
+  font-weight: 500;
   color: var(--text-color);
-  font-size: 0.9rem;
-  padding: 4px 8px;
-  border: 1px solid transparent;
-  transition: all 0.2s;
+  font-size: 0.95rem;
+  padding: 8px 0;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent-color);
+  transition: width 0.3s ease;
 }
 
 .nav-links a:hover {
-  background: var(--text-color);
-  color: #fff;
+  color: var(--accent-color);
 }
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+

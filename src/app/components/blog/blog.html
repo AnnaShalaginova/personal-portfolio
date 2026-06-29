@@ -1,0 +1,102 @@
+<section id="blog" class="blog-section">
+  <div class="container">
+    <h2 class="section-title">Insights & Writing</h2>
+    <p class="section-subtitle">Thoughts on product management, engineering leadership, and data analytics.</p>
+
+    <!-- Category Filter -->
+    <div class="category-filters">
+      @for (category of categories(); track category) {
+        <button 
+          [class.active]="selectedCategory() === category"
+          (click)="selectCategory(category)"
+          class="filter-btn">
+          {{ category }}
+        </button>
+      }
+    </div>
+
+    <!-- Blog Grid -->
+    <div class="blog-grid">
+      @for (post of getFilteredPosts(); track post.id) {
+        <article class="blog-card window-card" (click)="openPost(post)">
+          <div class="window-header">
+            <div class="dot dot-red"></div>
+            <div class="dot dot-yellow"></div>
+            <div class="dot dot-green"></div>
+            <span class="window-title">post-{{ post.id }}.md</span>
+          </div>
+          
+          <div class="card-image-wrapper">
+            <img [src]="post.imageUrl" [alt]="post.title" class="card-image" loading="lazy" />
+            <span class="card-category">{{ post.category }}</span>
+          </div>
+
+          <div class="card-content">
+            <div class="card-meta">
+              <span>{{ post.date }}</span>
+              <span class="meta-dot"></span>
+              <span>{{ post.readTime }}</span>
+            </div>
+            <h3 class="card-title">{{ post.title }}</h3>
+            <p class="card-excerpt">{{ post.excerpt }}</p>
+            
+            <div class="card-footer">
+              <div class="card-tags">
+                @for (tag of post.tags.slice(0, 2); track tag) {
+                  <span class="tag-pill">#{{ tag }}</span>
+                }
+              </div>
+              <span class="read-more">Read Article &rarr;</span>
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Blog Modal / Overlay Reader -->
+@if (selectedPost(); as post) {
+  <div class="blog-modal-backdrop" (click)="closePost()">
+    <div class="blog-modal-content window-card" (click)="$event.stopPropagation()">
+      <div class="window-header modal-window-header">
+        <div class="header-dots">
+          <div class="dot dot-red" (click)="closePost()"></div>
+          <div class="dot dot-yellow"></div>
+          <div class="dot dot-green"></div>
+        </div>
+        <span class="window-title">{{ post.title }}</span>
+        <button class="close-btn" (click)="closePost()">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-hero-image" [style.background-image]="'url(' + post.imageUrl + ')'">
+          <div class="modal-hero-overlay"></div>
+          <div class="modal-hero-text">
+            <span class="modal-category">{{ post.category }}</span>
+            <h1 class="modal-title">{{ post.title }}</h1>
+            <div class="modal-meta">
+              <span>{{ post.date }}</span>
+              <span class="meta-dot"></span>
+              <span>{{ post.readTime }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-article-container">
+          <div class="modal-tags">
+            @for (tag of post.tags; track tag) {
+              <span class="modal-tag-pill">#{{ tag }}</span>
+            }
+          </div>
+          
+          <div class="modal-article-content" [innerHTML]="post.content"></div>
+          
+          <div class="modal-footer">
+            <button class="btn" (click)="closePost()">Close Article</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}

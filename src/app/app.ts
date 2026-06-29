@@ -3,6 +3,7 @@ import { Header } from './components/header/header';
 import { Hero } from './components/hero/hero';
 import { About } from './components/about/about';
 import { Projects } from './components/projects/projects';
+import { Blog } from './components/blog/blog';
 import { Contact } from './components/contact/contact';
 import { Footer } from './components/footer/footer';
 
@@ -13,6 +14,7 @@ import { Footer } from './components/footer/footer';
     Hero,
     About,
     Projects,
+    Blog,
     Contact,
     Footer
   ],

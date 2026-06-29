@@ -8,6 +8,7 @@ interface Project {
   tags: string[];
   link: string;
   image_url?: string;
+  gallery_urls?: string[];
 }
 
 @Component({
@@ -19,6 +20,19 @@ interface Project {
 export class Projects implements OnInit {
   // Robust initial data
   projects = signal<Project[]>([
+    {
+      title: 'Photography Portfolio',
+      description: 'A collection of visual stories captured through the lens, focusing on street photography and portraits from around the world.',
+      tags: ['Photography', 'Visual Arts'],
+      link: '#',
+      image_url: 'https://images.unsplash.com/photo-1554080353-a576cf803bda?auto=format&fit=crop&q=80&w=800',
+      gallery_urls: [
+        'https://images.unsplash.com/photo-1554080353-a576cf803bda?auto=format&fit=crop&q=80&w=800',
+        'https://images.unsplash.com/photo-1452587925148-ce544e77e70d?auto=format&fit=crop&q=80&w=800',
+        'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&q=80&w=800',
+        'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=800'
+      ]
+    },
     {
       title: 'Ukulele Songbook App',
       description: 'A cloud-synced digital songbook for ukulele players featuring real-time chord visualization, bracket notation parsing, and a transposer utility.',
@@ -38,20 +52,25 @@ export class Projects implements OnInit {
       description: 'A full-stack e-commerce solution with Angular and Node.js.',
       tags: ['Angular', 'Node.js', 'MongoDB'],
       link: '#'
-    },
-    {
-      title: 'Data Visualization Dashboard',
-      description: 'Interactive dashboard for real-time data analysis using D3.js.',
-      tags: ['D3.js', 'TypeScript', 'API Integration'],
-      link: '#'
     }
   ]);
   
   loading = signal<boolean>(true);
   error = signal<string | null>(null);
+  selectedGallery = signal<string[] | null>(null);
 
   async ngOnInit() {
     await this.fetchProjects();
+  }
+
+  openGallery(urls: string[] | undefined) {
+    if (urls && urls.length > 0) {
+      this.selectedGallery.set(urls);
+    }
+  }
+
+  closeGallery() {
+    this.selectedGallery.set(null);
   }
 
   async fetchProjects() {
@@ -65,13 +84,11 @@ export class Projects implements OnInit {
       if (error) throw error;
       
       if (data && data.length > 0) {
-        // Filter out rows that don't at least have a title
         const validDbProjects = data.filter(p => p.title && p.title.trim() !== '');
         
         if (validDbProjects.length > 0) {
           const localProjects = this.projects();
           const mergedProjects = validDbProjects.map(dbProject => {
-            // Find a local match to preserve things like images if DB is missing them
             const localMatch = localProjects.find(p => 
               p.title.toLowerCase().trim() === dbProject.title.toLowerCase().trim()
             );
@@ -81,10 +98,11 @@ export class Projects implements OnInit {
               description: dbProject.description || localMatch?.description || 'No description provided.',
               tags: dbProject.tags || localMatch?.tags || [],
               link: dbProject.link || localMatch?.link || '#',
-              image_url: dbProject.image_url || localMatch?.image_url || null
+              image_url: dbProject.image_url || localMatch?.image_url || null,
+              gallery_urls: dbProject.gallery_urls || localMatch?.gallery_urls || []
             };
           });
-          
+
           const dbProjectTitles = new Set(
             validDbProjects.map(p => p.title.toLowerCase().trim())
           );
