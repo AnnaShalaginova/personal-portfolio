@@ -1,9 +1,13 @@
-<app-header></app-header>
-<main>
-  <app-hero></app-hero>
-  <app-about></app-about>
-  <app-projects></app-projects>
-  <app-blog></app-blog>
-  <app-contact></app-contact>
-</main>
-<app-footer></app-footer>
+@if (isAdminRoute) {
+  <app-admin-blog></app-admin-blog>
+} @else {
+  <app-header></app-header>
+  <main>
+    <app-hero></app-hero>
+    <app-about></app-about>
+    <app-projects></app-projects>
+    <app-blog></app-blog>
+    <app-contact></app-contact>
+  </main>
+  <app-footer></app-footer>
+}

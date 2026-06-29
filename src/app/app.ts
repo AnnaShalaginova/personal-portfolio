@@ -4,6 +4,7 @@ import { Hero } from './components/hero/hero';
 import { About } from './components/about/about';
 import { Projects } from './components/projects/projects';
 import { Blog } from './components/blog/blog';
+import { AdminBlog } from './components/admin-blog/admin-blog';
 import { Contact } from './components/contact/contact';
 import { Footer } from './components/footer/footer';
 
@@ -15,6 +16,7 @@ import { Footer } from './components/footer/footer';
     About,
     Projects,
     Blog,
+    AdminBlog,
     Contact,
     Footer
   ],
@@ -23,4 +25,5 @@ import { Footer } from './components/footer/footer';
 })
 export class App {
   protected readonly title = signal('personal-portfolio');
+  protected readonly isAdminRoute = window.location.pathname.replace(/\/$/, '') === '/admin';
 }

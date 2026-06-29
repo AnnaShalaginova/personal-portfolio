@@ -1,0 +1,110 @@
+<main class="admin-shell">
+  <section class="admin-panel window-card">
+    <div class="window-header">
+      <div class="dot dot-red"></div>
+      <div class="dot dot-yellow"></div>
+      <div class="dot dot-green"></div>
+      <span class="window-title">blog-admin</span>
+    </div>
+
+    <div class="admin-content">
+      <a class="back-link" href="/">Back to portfolio</a>
+      <h1>Blog Editor</h1>
+      <p class="admin-subtitle">Create new portfolio blog posts with a restricted Supabase login.</p>
+
+      @if (isLoading()) {
+        <p class="status-note">Checking session...</p>
+      } @else if (!isAuthenticated()) {
+        <form class="admin-form" (ngSubmit)="login()">
+          <label>
+            Email
+            <input
+              type="email"
+              name="email"
+              [(ngModel)]="email"
+              autocomplete="email"
+              required
+              [placeholder]="allowedEmail"
+            />
+          </label>
+
+          <label>
+            Password
+            <input
+              type="password"
+              name="password"
+              [(ngModel)]="password"
+              autocomplete="current-password"
+              required
+            />
+          </label>
+
+          @if (loginMessage()) {
+            <p class="form-message error-message">{{ loginMessage() }}</p>
+          }
+
+          <button class="btn" type="submit">Log In</button>
+        </form>
+      } @else {
+        <div class="admin-toolbar">
+          <span>Signed in as {{ allowedEmail }}</span>
+          <button type="button" class="secondary-btn" (click)="logout()">Log Out</button>
+        </div>
+
+        <form class="admin-form editor-form" (ngSubmit)="createPost()">
+          <label>
+            Title
+            <input type="text" name="title" [(ngModel)]="post.title" required />
+          </label>
+
+          <label>
+            Excerpt
+            <textarea name="excerpt" rows="3" [(ngModel)]="post.excerpt" required></textarea>
+          </label>
+
+          <label>
+            Content
+            <textarea name="content" rows="12" [(ngModel)]="post.content" required></textarea>
+          </label>
+
+          <div class="form-grid">
+            <label>
+              Date Label
+              <input type="text" name="date" [(ngModel)]="post.date" required />
+            </label>
+
+            <label>
+              Read Time
+              <input type="text" name="read_time" [(ngModel)]="post.read_time" required />
+            </label>
+
+            <label>
+              Category
+              <input type="text" name="category" [(ngModel)]="post.category" required />
+            </label>
+
+            <label>
+              Tags
+              <input type="text" name="tags" [(ngModel)]="post.tags" placeholder="Angular, Supabase, Product" />
+            </label>
+          </div>
+
+          <label>
+            Image URL
+            <input type="url" name="image_url" [(ngModel)]="post.image_url" required />
+          </label>
+
+          @if (formMessage()) {
+            <p class="form-message" [class.error-message]="formMessage() !== 'Blog post published.'">
+              {{ formMessage() }}
+            </p>
+          }
+
+          <button class="btn" type="submit" [disabled]="isSubmitting()">
+            {{ isSubmitting() ? 'Publishing...' : 'Publish Post' }}
+          </button>
+        </form>
+      }
+    </div>
+  </section>
+</main>
