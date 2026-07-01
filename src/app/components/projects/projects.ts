@@ -84,7 +84,11 @@ export class Projects implements OnInit {
       if (error) throw error;
       
       if (data && data.length > 0) {
-        const validDbProjects = data.filter(p => p.title && p.title.trim() !== '');
+        const hiddenProjectTitles = new Set(['photography']);
+        const validDbProjects = data.filter(p => {
+          const normalizedTitle = p.title?.toLowerCase().trim();
+          return normalizedTitle && !hiddenProjectTitles.has(normalizedTitle);
+        });
         
         if (validDbProjects.length > 0) {
           const localProjects = this.projects();
