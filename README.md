@@ -1,5 +1,23 @@
 # PersonalPortfolio
 
+## Web Analytics
+
+The portfolio includes a GA4-ready analytics loader. Tracking is disabled until a real Google Analytics Measurement ID is added in:
+
+```text
+src/environments/environment.ts
+```
+
+Set:
+
+```ts
+analytics: {
+  googleMeasurementId: 'G-XXXXXXXXXX'
+}
+```
+
+The app tracks the initial page view and hash/path changes.
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.10.
 
 ## Development server
