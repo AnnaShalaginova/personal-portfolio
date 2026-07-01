@@ -48,90 +48,10 @@ FOR DELETE
 TO authenticated
 USING ((auth.jwt() ->> 'email') = 'anya.shalaginova@gmail.com');
 
--- 5. Seed initial blog posts
-INSERT INTO public.blog_posts (title, excerpt, content, date, read_time, category, tags, image_url)
-VALUES 
-(
+-- 5. Remove starter blog posts
+DELETE FROM public.blog_posts
+WHERE title IN (
     'The Synergy of Product Management and Business Intelligence',
-    'Why data-driven alignment is no longer optional for modern products, and how to build telemetry that informs strategy rather than just reporting on it.',
-    '<p>In modern software product management, data is often heralded as the ultimate decision-maker. Yet, many organizations fall into the trap of using data retroactively—as a scorecard to report on past performance rather than a steering wheel to guide future product decisions. This is where the intersection of <strong>Product Management (PM)</strong> and <strong>Business Intelligence (BI)</strong> becomes critical.</p>
-    
-    <h3>1. The Telemetry Trap</h3>
-    <p>Most product teams track standard page views, clicks, and conversion rates. However, this level of telemetry only tells you <em>what</em> users are doing, not <em>why</em> or how it drives long-term business value. By integrating BI thinking early in the product discovery phase, PMs can define metrics that trace the full user journey—from initial acquisition to feature adoption and eventual retention.</p>
-    
-    <h3>2. Defining Actionable KPIs</h3>
-    <p>Instead of superficial metrics like "total registered users," BI-driven product management focuses on cohort retention, lifetime value, and behavior-based activation milestones. For example:
-    <ul>
-      <li><strong>Activation Milestone:</strong> Did the user perform the core value action (e.g., custom dashboard creation) within their first 48 hours?</li>
-      <li><strong>Retention Predictor:</strong> What specific usage frequency in week one correlates with 60-day customer retention?</li>
-    </ul>
-    </p>
-
-    <h3>3. Breaking Down Silos at Analog Devices</h3>
-    <p>In enterprise settings, product insights shouldn''t reside solely within developer tools. Creating unified <strong>Power BI dashboards</strong> that overlay user behavior metrics with sales pipeline data, customer support tickets, and post-M&A system health enables cross-functional stakeholders to align on priorities. When engineering, sales, and design look at the exact same data story, decisions are made faster and with significantly less friction.</p>
-
-    <h3>Conclusion</h3>
-    <p>By treating BI as an embedded product capability rather than an afterthought, product managers can transform passive data lakes into active strategic roadmaps. Build telemetry that inspires questions, not just reports.</p>',
-    'June 18, 2026',
-    '6 min read',
-    'Product Strategy',
-    ARRAY['Product Management', 'BI', 'Data Analytics', 'KPIs'],
-    'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800'
-),
-(
     'Unlocking Personalization: Building Sitecore-based ML Recommendation Engines',
-    'A post-mortem on designing and deploying an enterprise personalization engine targeting 120,000+ users, focusing on API design and data pipelines.',
-    '<p>Deploying Machine Learning (ML) algorithms is one thing; integrating them into a high-traffic Content Management System (CMS) like <strong>Sitecore</strong> to deliver real-time personalized recommendations is an entirely different challenge. In this article, I outline the architecture and lessons learned from launching a personalization engine targeting 125,000+ global users.</p>
-    
-    <h3>1. The Architectural Blueprint</h3>
-    <p>To ensure optimal site performance, we decoupled the heavy ML processing from the front-end page rendering. Our stack utilized:
-    <ul>
-      <li><strong>Data Ingestion:</strong> Continuous user interaction streaming using modern event buses.</li>
-      <li><strong>ML Engine:</strong> A python-based collaborative filtering and content-based recommendation model deployed in a scalable cloud container.</li>
-      <li><strong>Content Delivery:</strong> Sitecore layout engines query cached user profiles and pre-calculated recommendations via a low-latency REST API.</li>
-    </ul>
-    </p>
-    
-    <h3>2. Balancing Personalization with Performance</h3>
-    <p>One of the primary challenges was avoiding the "layout shift" or page delays associated with client-side content injection. We resolved this by implementing:
-    <ol>
-      <li><strong>Edge Caching:</strong> Storing anonymized cohort recommendations at the CDN edge.</li>
-      <li><strong>Predictive Fetching:</strong> Prefetching recommendations when the user shows intent (hovering on a section, navigating a category).</li>
-      <li><strong>Fail-safe Fallbacks:</strong> Instantly reverting to standard content if the API response takes longer than 150ms.</li>
-    </ol>
-    </p>
-
-    <h3>3. Navigating GDPR and Compliance</h3>
-    <p>As a global product team, privacy and compliance were top priorities. We designed the telemetry pipelines to strictly respect cookie consent signals. Personalization models were trained only on aggregated, anonymized user flows, ensuring full alignment with GDPR and local data privacy frameworks while still delivering a highly tailored user experience.</p>',
-    'May 12, 2026',
-    '8 min read',
-    'Technical Leadership',
-    ARRAY['Machine Learning', 'Sitecore', 'Personalization', 'API Design'],
-    'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800'
-),
-(
-    'Scaling Agile in Enterprise Systems: A Playbook for M&A Integrations',
-    'How to unify disparate team cultures, streamline ticket management, and ensure zero downtime for users when merging massive information systems.',
-    '<p>Post-merger integration (PMI) is one of the most complex challenges an enterprise information systems team can face. Unifying two distinct software ecosystems, overlapping databases, and disparate team cultures requires a delicate balance of operational discipline and empathetic leadership.</p>
-    
-    <h3>1. The Human Side of Integration</h3>
-    <p>When two companies merge, the tech stack is rarely the hardest part to combine—the people and processes are. The first step in any M&A software integration is defining a unified culture. We set up joint hackathons and shared discovery workshops to allow engineers and product managers from both companies to align on coding standards, QA procedures, and release cycles before writing any migration code.</p>
-    
-    <h3>2. The Jira and Agile Alignment</h3>
-    <p>Before launching sprint plans, we migrated both entities onto a single <strong>Azure DevOps</strong> and <strong>Jira</strong> cloud instance. Key tactics included:
-    <ul>
-      <li>Standardizing ticket states (e.g., aligning "Ready for Dev" definitions).</li>
-      <li>Consolidating Scrum and Kanban structures into a hybrid SAFe framework.</li>
-      <li>Setting up shared epics to track the critical integration dependencies.</li>
-    </ul>
-    </p>
-
-    <h3>3. Minimizing Customer Disruption</h3>
-    <p>During the database migration phase, our team adopted a "Strangler Fig" pattern. Instead of a risky big-bang release, we migrated system functions incrementally—replacing legacy components one service at a time. This allowed us to maintain 100% uptime for our users and identify performance bottlenecks before they could impact the broader customer base.</p>',
-    'March 29, 2026',
-    '5 min read',
-    'Agile & Operations',
-    ARRAY['Agile', 'M&A', 'Jira', 'System Integration'],
-    'https://images.unsplash.com/photo-1531538606174-0f90ff5dce83?auto=format&fit=crop&q=80&w=800'
-)
-ON CONFLICT (title) DO NOTHING;
+    'Scaling Agile in Enterprise Systems: A Playbook for M&A Integrations'
+);

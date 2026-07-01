@@ -14,15 +14,12 @@ describe('Blog', () => {
 
     fixture = TestBed.createComponent(Blog);
     component = fixture.componentInstance;
-    
-    // Mock database fetch so tests run instantly and don't rely on live Supabase connection
+
     vi.spyOn(component as any, 'fetchBlogPosts').mockResolvedValue(undefined);
     component.loading.set(false);
-    
-    // Manually run initialization logic
     component.blogPosts.set(component.localPosts);
     component.extractCategories(component.localPosts);
-    
+
     fixture.detectChanges();
   });
 
@@ -30,46 +27,17 @@ describe('Blog', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should extract correct categories starting with All', () => {
-    const categories = component.categories();
-    expect(categories[0]).toBe('All');
-    expect(categories).toContain('Product Strategy');
-    expect(categories).toContain('Technical Leadership');
-    expect(categories).toContain('Agile & Operations');
+  it('should start with no local fallback posts', () => {
+    expect(component.localPosts.length).toBe(0);
+    expect(component.blogPosts().length).toBe(0);
+    expect(component.categories()).toEqual(['All']);
   });
 
-  it('should filter posts by selected category', () => {
-    // Select a category
-    component.selectCategory('Product Strategy');
-    expect(component.selectedCategory()).toBe('Product Strategy');
+  it('should render an empty blog state', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    const emptyState = compiled.querySelector('.empty-blog-state');
 
-    const filtered = component.getFilteredPosts();
-    expect(filtered.length).toBe(1);
-    expect(filtered[0].title).toBe('The Synergy of Product Management and Business Intelligence');
-
-    // Re-select All
-    component.selectCategory('All');
-    expect(component.getFilteredPosts().length).toBe(3);
-  });
-
-  it('should open and close modal on post selection', async () => {
-    const post = component.blogPosts()[0];
-    
-    // Select / open post
-    component.openPost(post);
-    expect(component.selectedPost()).toEqual(post);
-
-    fixture.detectChanges();
-    let compiled = fixture.nativeElement as HTMLElement;
-    let modal = compiled.querySelector('.blog-modal-backdrop');
-    expect(modal).toBeTruthy();
-
-    // Close post
-    component.closePost();
-    expect(component.selectedPost()).toBeNull();
-    
-    fixture.detectChanges();
-    modal = compiled.querySelector('.blog-modal-backdrop');
-    expect(modal).toBeFalsy();
+    expect(emptyState).toBeTruthy();
+    expect(emptyState?.textContent).toContain('No blog posts published yet.');
   });
 });

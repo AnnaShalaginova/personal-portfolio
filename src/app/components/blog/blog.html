@@ -52,6 +52,12 @@
         </article>
       }
     </div>
+
+    @if (!loading() && getFilteredPosts().length === 0) {
+      <div class="empty-blog-state window-card">
+        <p>No blog posts published yet.</p>
+      </div>
+    }
   </div>
 </section>
 
