@@ -46,12 +46,6 @@ export class Projects implements OnInit {
       tags: ['Streamlit', 'Python', 'Plotly', 'SQLite', 'Data Visualization'],
       link: 'https://box-office-intelligence-7uqxlaztmmcuuug7xdsuqd.streamlit.app',
       image_url: '/box-office-intelligence.png'
-    },
-    {
-      title: 'E-commerce Platform',
-      description: 'A full-stack e-commerce solution with Angular and Node.js.',
-      tags: ['Angular', 'Node.js', 'MongoDB'],
-      link: '#'
     }
   ]);
   
@@ -84,7 +78,7 @@ export class Projects implements OnInit {
       if (error) throw error;
       
       if (data && data.length > 0) {
-        const hiddenProjectTitles = new Set(['photography']);
+        const hiddenProjectTitles = new Set(['photography', 'e-commerce platform']);
         const validDbProjects = data.filter(p => {
           const normalizedTitle = p.title?.toLowerCase().trim();
           return normalizedTitle && !hiddenProjectTitles.has(normalizedTitle);
