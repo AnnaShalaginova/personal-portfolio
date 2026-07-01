@@ -12,17 +12,6 @@
   text-align: center;
 }
 
-.window-title {
-  display: none; /* Remove industrial terminal feel */
-}
-
-.window-header {
-  justify-content: center; /* Center dots or remove if too industrial */
-  background: transparent;
-  border-bottom: none;
-  padding: 40px 0 0 0;
-}
-
 .window-content {
   padding: 60px 80px 80px;
 }
@@ -88,4 +77,3 @@
     align-items: stretch;
   }
 }
-
