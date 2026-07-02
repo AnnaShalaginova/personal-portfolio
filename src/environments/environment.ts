@@ -5,7 +5,7 @@ export const environment = {
   supabaseUrl: 'https://hqmrweubmpdxhqvdlate.supabase.co',
   supabaseKey: 'sb_publishable_Q_UXmiHdMevEypVa-uaSgg_ZgZ9q9f3',
   analytics: {
-    googleMeasurementId: ''
+    googleMeasurementId: 'G-NJGX91EWLJ'
   }
 };
 
