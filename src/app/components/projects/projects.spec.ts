@@ -41,7 +41,7 @@ describe('Projects', () => {
     expect(linkBtn).toBeFalsy(); // Should be hidden because link is '#'
   });
 
-  it('should show View Gallery button for Photography Portfolio', async () => {
+  it('should hide View Gallery button for Photography Portfolio', async () => {
     await fixture.whenStable();
     fixture.detectChanges();
 
@@ -51,7 +51,6 @@ describe('Projects', () => {
     );
 
     const galleryBtn = photographyCard?.querySelector('.gallery-btn');
-    expect(galleryBtn).toBeTruthy();
-    expect(galleryBtn?.textContent).toContain('View Gallery');
+    expect(galleryBtn).toBeFalsy();
   });
 });

@@ -25,13 +25,7 @@ export class Projects implements OnInit {
       description: 'A collection of visual stories captured through the lens, focusing on street photography and portraits from around the world.',
       tags: ['Photography', 'Visual Arts'],
       link: '#',
-      image_url: 'https://images.unsplash.com/photo-1554080353-a576cf803bda?auto=format&fit=crop&q=80&w=800',
-      gallery_urls: [
-        'https://images.unsplash.com/photo-1554080353-a576cf803bda?auto=format&fit=crop&q=80&w=800',
-        'https://images.unsplash.com/photo-1452587925148-ce544e77e70d?auto=format&fit=crop&q=80&w=800',
-        'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&q=80&w=800',
-        'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=800'
-      ]
+      image_url: 'https://images.unsplash.com/photo-1554080353-a576cf803bda?auto=format&fit=crop&q=80&w=800'
     },
     {
       title: 'Ukulele Songbook App',
@@ -67,6 +61,10 @@ export class Projects implements OnInit {
     this.selectedGallery.set(null);
   }
 
+  shouldHideGallery(title: string) {
+    return title.toLowerCase().trim() === 'photography portfolio';
+  }
+
   async fetchProjects() {
     try {
       this.loading.set(true);
@@ -97,7 +95,9 @@ export class Projects implements OnInit {
               tags: dbProject.tags || localMatch?.tags || [],
               link: dbProject.link || localMatch?.link || '#',
               image_url: dbProject.image_url || localMatch?.image_url || null,
-              gallery_urls: dbProject.gallery_urls || localMatch?.gallery_urls || []
+              gallery_urls: this.shouldHideGallery(dbProject.title || localMatch?.title || '')
+                ? []
+                : dbProject.gallery_urls || localMatch?.gallery_urls || []
             };
           });
 
