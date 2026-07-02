@@ -53,4 +53,17 @@ describe('Projects', () => {
     const galleryBtn = photographyCard?.querySelector('.gallery-btn');
     expect(galleryBtn).toBeFalsy();
   });
+
+  it('should show Coming Soon status for Photography Portfolio', async () => {
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const photographyCard = Array.from(compiled.querySelectorAll('.project-card')).find(card =>
+      card.querySelector('h3')?.textContent?.includes('Photography Portfolio')
+    );
+
+    const status = photographyCard?.querySelector('.project-status');
+    expect(status?.textContent).toContain('Coming Soon');
+  });
 });

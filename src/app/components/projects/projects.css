@@ -43,6 +43,20 @@
   padding: 2.5rem;
 }
 
+.project-status {
+  background: rgba(162, 155, 254, 0.12);
+  border: 1px solid rgba(162, 155, 254, 0.25);
+  border-radius: 999px;
+  color: var(--accent-color);
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+  padding: 6px 12px;
+  text-transform: uppercase;
+}
+
 .project-info h3 {
   font-size: 1.8rem;
   margin-bottom: 1rem;
@@ -177,5 +191,4 @@
   transform: scale(1.03);
   box-shadow: 0 10px 20px rgba(0,0,0,0.15);
 }
-
 

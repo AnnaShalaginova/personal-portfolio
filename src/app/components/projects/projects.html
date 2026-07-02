@@ -22,6 +22,7 @@
         <div *ngIf="!project.image_url" class="project-image-placeholder"></div>
       </div>
       <div class="project-info">
+        <span *ngIf="project.status" class="project-status">{{ project.status }}</span>
         <h3>{{ project.title || 'Untitled' }}</h3>
         <p>{{ project.description || 'No description available.' }}</p>
         <div class="project-tags" *ngIf="project.tags">
