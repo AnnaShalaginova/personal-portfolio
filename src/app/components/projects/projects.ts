@@ -7,6 +7,7 @@ interface Project {
   description: string;
   tags: string[];
   link: string;
+  readmeLink?: string;
   image_url?: string;
   gallery_urls?: string[];
   status?: string;
@@ -41,6 +42,7 @@ export class Projects implements OnInit {
       description: 'An interactive Streamlit dashboard for exploring movie revenue trends, genre performance, ratings, language segments, and exportable box office data from 2000 through 2024.',
       tags: ['Streamlit', 'Python', 'Plotly', 'SQLite', 'Data Visualization'],
       link: 'https://box-office-intelligence-7uqxlaztmmcuuug7xdsuqd.streamlit.app',
+      readmeLink: 'https://github.com/AnnaShalaginova/box-office-intelligence#readme',
       image_url: '/box-office-intelligence.png'
     }
   ]);
@@ -96,6 +98,7 @@ export class Projects implements OnInit {
               description: dbProject.description || localMatch?.description || 'No description provided.',
               tags: dbProject.tags || localMatch?.tags || [],
               link: dbProject.link || localMatch?.link || '#',
+              readmeLink: dbProject.readme_link || localMatch?.readmeLink,
               image_url: dbProject.image_url || localMatch?.image_url || null,
               status: localMatch?.status,
               gallery_urls: this.shouldHideGallery(dbProject.title || localMatch?.title || '')

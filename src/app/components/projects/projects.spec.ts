@@ -66,4 +66,22 @@ describe('Projects', () => {
     const status = photographyCard?.querySelector('.project-status');
     expect(status?.textContent).toContain('Coming Soon');
   });
+
+  it('should link the Box Office project to its GitHub README', async () => {
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const boxOfficeCard = Array.from(compiled.querySelectorAll('.project-card')).find(card =>
+      card.querySelector('h3')?.textContent?.includes('Box Office Intelligence')
+    );
+
+    const readmeLink = Array.from(
+      boxOfficeCard?.querySelectorAll<HTMLAnchorElement>('a') || []
+    ).find(link => link.textContent?.includes('Read Project README'));
+
+    expect(readmeLink?.href).toBe(
+      'https://github.com/AnnaShalaginova/box-office-intelligence#readme'
+    );
+  });
 });

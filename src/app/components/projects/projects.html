@@ -30,6 +30,7 @@
         </div>
         <div class="project-actions">
           <a *ngIf="project.link && project.link !== '#' && project.link !== '/'" [href]="project.link" class="project-link-btn" target="_blank">View Project</a>
+          <a *ngIf="project.readmeLink" [href]="project.readmeLink" class="project-link-btn" target="_blank" rel="noopener noreferrer">Read Project README</a>
           <button *ngIf="project.gallery_urls && project.gallery_urls.length > 0" 
                   (click)="openGallery(project.gallery_urls)" 
                   class="project-link-btn gallery-btn">
