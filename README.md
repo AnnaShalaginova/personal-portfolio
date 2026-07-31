@@ -2,21 +2,30 @@
 
 ## Web Analytics
 
-The portfolio includes a GA4-ready analytics loader. Tracking is disabled until a real Google Analytics Measurement ID is added in:
+The portfolio uses Google Analytics 4 with measurement ID `G-NJGX91EWLJ`.
+The analytics service loads Google’s `gtag.js` script when the application
+starts and records:
+
+- The initial page view
+- Hash changes, such as navigation to `#projects` or `#contact`
+- Browser history navigation
+
+Duplicate page-view events for the same URL are ignored. The configuration is
+stored in:
 
 ```text
 src/environments/environment.ts
 ```
 
-Set:
+To verify production tracking:
 
-```ts
-analytics: {
-  googleMeasurementId: 'G-XXXXXXXXXX'
-}
-```
+1. Open **Reports → Realtime** in Google Analytics.
+2. Visit the production portfolio in a separate browser window.
+3. Navigate between sections of the portfolio.
+4. Confirm that the active user and page-view activity appear in Realtime.
 
-The app tracks the initial page view and hash/path changes.
+The current implementation tracks page views only. Custom events for project
+links, contact submissions, or other interactions can be added separately.
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.10.
 
