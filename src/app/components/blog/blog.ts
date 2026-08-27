@@ -21,7 +21,25 @@ interface BlogPost {
   styleUrl: './blog.css'
 })
 export class Blog implements OnInit {
-  localPosts: BlogPost[] = [];
+  localPosts: BlogPost[] = [
+    {
+      id: 'are-we-actually-more-productive',
+      title: 'Are We Actually More Productive?',
+      excerpt: 'When technology gives us more capacity, the meaningful question may be less about speed and more about what we choose to do with it.',
+      content: `
+        <p>I really enjoyed reading <a href="https://uxdesign.cc/what-is-the-purpose-of-software-410e155567e3" target="_blank" rel="noopener noreferrer">this blog by Michael Burnett</a> about whether decades of increasingly powerful software have actually made us more productive.</p>
+
+        <p>One idea that stuck with me: when technology makes something easier, we don’t necessarily work less — we often just do more of it.</p>
+
+        <p>With AI making it easier than ever to create, analyze, and automate, maybe the more interesting question isn’t how much faster we can work, but what we choose to do with all that extra capacity.</p>
+      `,
+      date: 'August 27, 2026',
+      readTime: '2 min read',
+      category: 'Reflections',
+      tags: ['AI', 'Productivity'],
+      imageUrl: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&q=80&w=800'
+    }
+  ];
 
   private readonly hiddenStarterPostTitles = new Set([
     'the synergy of product management and business intelligence',
@@ -96,8 +114,16 @@ export class Blog implements OnInit {
             imageUrl: dbPost.image_url || 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&q=80&w=800'
           }));
 
-        this.blogPosts.set(dbPosts);
-        this.extractCategories(dbPosts);
+        const dbPostTitles = new Set(
+          dbPosts.map(post => post.title.toLowerCase().trim())
+        );
+        const localOnlyPosts = this.localPosts.filter(
+          post => !dbPostTitles.has(post.title.toLowerCase().trim())
+        );
+        const allPosts = [...dbPosts, ...localOnlyPosts];
+
+        this.blogPosts.set(allPosts);
+        this.extractCategories(allPosts);
       }
     } catch (err: any) {
       console.log('Supabase fetch error for blog_posts, using local fallback:', err);

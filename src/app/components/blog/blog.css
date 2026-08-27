@@ -387,6 +387,18 @@
   color: #0f172a;
 }
 
+.modal-article-content a {
+  color: var(--accent-color);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.modal-article-content a:hover {
+  text-decoration-thickness: 2px;
+}
+
 .modal-footer {
   margin-top: 40px;
   padding-top: 24px;

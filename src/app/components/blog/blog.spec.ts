@@ -27,17 +27,18 @@ describe('Blog', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should start with no local fallback posts', () => {
-    expect(component.localPosts.length).toBe(0);
-    expect(component.blogPosts().length).toBe(0);
-    expect(component.categories()).toEqual(['All']);
+  it('should provide the productivity reflection as a local post', () => {
+    expect(component.localPosts.length).toBe(1);
+    expect(component.blogPosts().length).toBe(1);
+    expect(component.blogPosts()[0].title).toBe('Are We Actually More Productive?');
+    expect(component.categories()).toEqual(['All', 'Reflections']);
   });
 
-  it('should render an empty blog state', () => {
+  it('should render the local post card', () => {
     const compiled = fixture.nativeElement as HTMLElement;
-    const emptyState = compiled.querySelector('.empty-blog-state');
+    const card = compiled.querySelector('.blog-card');
 
-    expect(emptyState).toBeTruthy();
-    expect(emptyState?.textContent).toContain('No blog posts published yet.');
+    expect(card).toBeTruthy();
+    expect(card?.textContent).toContain('Are We Actually More Productive?');
   });
 });
