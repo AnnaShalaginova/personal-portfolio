@@ -84,4 +84,21 @@ describe('Projects', () => {
       'https://github.com/AnnaShalaginova/box-office-intelligence#readme'
     );
   });
+
+  it('should link the Event Invite App to the live project', async () => {
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const eventInviteCard = Array.from(compiled.querySelectorAll('.project-card')).find(card =>
+      card.querySelector('h3')?.textContent?.includes('Event Invite App')
+    );
+    const projectLink = Array.from(
+      eventInviteCard?.querySelectorAll<HTMLAnchorElement>('a') || []
+    ).find(link => link.textContent?.includes('View Project'));
+
+    expect(projectLink?.href).toBe(
+      'https://event-invite-web.onrender.com/login?next=%2F'
+    );
+  });
 });

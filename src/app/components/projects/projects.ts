@@ -23,6 +23,12 @@ export class Projects implements OnInit {
   // Robust initial data
   projects = signal<Project[]>([
     {
+      title: 'Event Invite App',
+      description: 'An event invitation platform where hosts create events, share public invitation links, and track guests’ latest RSVPs from a private dashboard secured with magic-link authentication.',
+      tags: ['React', 'Supabase', 'Authentication', 'RSVP Management'],
+      link: 'https://event-invite-web.onrender.com/login?next=%2F'
+    },
+    {
       title: 'Photography Portfolio',
       description: 'A collection of visual stories captured through the lens, focusing on street photography and portraits from around the world.',
       tags: ['Photography', 'Visual Arts'],
