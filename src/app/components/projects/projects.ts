@@ -26,7 +26,8 @@ export class Projects implements OnInit {
       title: 'Event Invite App',
       description: 'An event invitation platform where hosts create events, share public invitation links, and track guests’ latest RSVPs from a private dashboard secured with magic-link authentication.',
       tags: ['React', 'Supabase', 'Authentication', 'RSVP Management'],
-      link: 'https://event-invite-web.onrender.com/login?next=%2F'
+      link: 'https://event-invite-web.onrender.com/login?next=%2F',
+      image_url: '/event-invite-dachshund.jpg'
     },
     {
       title: 'Photography Portfolio',

@@ -100,5 +100,8 @@ describe('Projects', () => {
     expect(projectLink?.href).toBe(
       'https://event-invite-web.onrender.com/login?next=%2F'
     );
+    expect(eventInviteCard?.querySelector<HTMLImageElement>('.project-image')?.src).toContain(
+      '/event-invite-dachshund.jpg'
+    );
   });
 });
