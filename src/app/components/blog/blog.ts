@@ -110,7 +110,7 @@ export class Blog implements OnInit {
       readTime: '5 min read',
       category: 'Reflections',
       tags: ['AI', 'Automation', 'PDF'],
-      imageUrl: '/dog-reading-pdf.png'
+      imageUrl: '/schnauzer-reading-pdf.png'
     },
     {
       id: 'are-we-actually-more-productive',
