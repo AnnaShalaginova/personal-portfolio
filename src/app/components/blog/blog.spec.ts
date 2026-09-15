@@ -28,9 +28,9 @@ describe('Blog', () => {
   });
 
   it('should provide the productivity reflection as a local post', () => {
-    expect(component.localPosts.length).toBe(1);
-    expect(component.blogPosts().length).toBe(1);
-    expect(component.blogPosts()[0].title).toBe('Are We Actually More Productive?');
+    expect(component.localPosts.length).toBe(2);
+    expect(component.blogPosts().length).toBe(2);
+    expect(component.blogPosts().some(post => post.title === 'Are We Actually More Productive?')).toBe(true);
     expect(component.categories()).toEqual(['All', 'Reflections']);
   });
 
@@ -39,6 +39,6 @@ describe('Blog', () => {
     const card = compiled.querySelector('.blog-card');
 
     expect(card).toBeTruthy();
-    expect(card?.textContent).toContain('Are We Actually More Productive?');
+    expect(card?.textContent).toContain('I Asked AI to Fill Out a PDF. It Was More Complicated Than I Expected.');
   });
 });
