@@ -110,7 +110,7 @@ export class Blog implements OnInit {
       readTime: '5 min read',
       category: 'Reflections',
       tags: ['AI', 'Automation', 'PDF'],
-      imageUrl: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&q=80&w=800'
+      imageUrl: '/ai-pdf-form-humor.png'
     },
     {
       id: 'are-we-actually-more-productive',
